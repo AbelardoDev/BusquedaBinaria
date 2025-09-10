@@ -1,12 +1,10 @@
 package app;
 
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMTMaterialLighterIJTheme;
-import view.Vista;
+import controller.Controlador;
+import model.VectorCompleto;
 
 public class Main {
     public static void main(String[] args) {
-        FlatMTMaterialLighterIJTheme.setup();
-        Vista vista = new Vista();
-        vista.setVisible(true);
+        Controlador controlador = new Controlador();
     }
 }

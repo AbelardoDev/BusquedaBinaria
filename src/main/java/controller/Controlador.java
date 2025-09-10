@@ -5,5 +5,16 @@ import model.Biblioteca;
 import view.Vista;
 
 public class Controlador {
-    public Controlador() {}
+    int n;
+    public Controlador() {
+        inicializar();
+    }
+
+    public void inicializar(){
+        FlatMTMaterialLighterIJTheme.setup();
+        Vista vista = new Vista();
+        vista.setVisible(true);
+        n = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("Ingrese el tamaño del arreglo:"));
+        Biblioteca biblioteca = new Biblioteca(n);
+    }
 }
