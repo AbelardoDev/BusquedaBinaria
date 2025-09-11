@@ -4,6 +4,8 @@
  */
 package view;
 
+import javax.swing.*;
+
 /**
  *
  * @author USUARIO
@@ -58,11 +60,11 @@ public class Vista extends javax.swing.JFrame {
         lblResult2 = new javax.swing.JLabel();
         pnlResult3 = new javax.swing.JPanel();
         lblResult3 = new javax.swing.JLabel();
-        pnlResult1 = new javax.swing.JPanel();
+        pnlColor = new javax.swing.JPanel();
         lblResult1 = new javax.swing.JLabel();
-        pnlResult4 = new javax.swing.JPanel();
+        pnlVerVector = new javax.swing.JPanel();
         lblResult4 = new javax.swing.JLabel();
-        pnlResult5 = new javax.swing.JPanel();
+        pnlLimpiar = new javax.swing.JPanel();
         lblResult5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -250,9 +252,9 @@ public class Vista extends javax.swing.JFrame {
             .addComponent(lblResult3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        pnlResult1.setBackground(new java.awt.Color(0, 0, 204));
-        pnlResult1.setForeground(new java.awt.Color(255, 255, 255));
-        pnlResult1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlColor.setBackground(new java.awt.Color(0, 0, 204));
+        pnlColor.setForeground(new java.awt.Color(255, 255, 255));
+        pnlColor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lblResult1.setBackground(new java.awt.Color(255, 255, 255));
         lblResult1.setFont(new java.awt.Font("Franklin Gothic Demi", 3, 16)); // NOI18N
@@ -260,8 +262,8 @@ public class Vista extends javax.swing.JFrame {
         lblResult1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblResult1.setText("Color");
 
-        javax.swing.GroupLayout pnlResult1Layout = new javax.swing.GroupLayout(pnlResult1);
-        pnlResult1.setLayout(pnlResult1Layout);
+        javax.swing.GroupLayout pnlResult1Layout = new javax.swing.GroupLayout(pnlColor);
+        pnlColor.setLayout(pnlResult1Layout);
         pnlResult1Layout.setHorizontalGroup(
             pnlResult1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblResult1, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
@@ -271,9 +273,9 @@ public class Vista extends javax.swing.JFrame {
             .addComponent(lblResult1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        pnlResult4.setBackground(new java.awt.Color(0, 0, 204));
-        pnlResult4.setForeground(new java.awt.Color(255, 255, 255));
-        pnlResult4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlVerVector.setBackground(new java.awt.Color(0, 0, 204));
+        pnlVerVector.setForeground(new java.awt.Color(255, 255, 255));
+        pnlVerVector.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lblResult4.setBackground(new java.awt.Color(255, 255, 255));
         lblResult4.setFont(new java.awt.Font("Franklin Gothic Demi", 3, 16)); // NOI18N
@@ -281,8 +283,8 @@ public class Vista extends javax.swing.JFrame {
         lblResult4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblResult4.setText("Ver vector");
 
-        javax.swing.GroupLayout pnlResult4Layout = new javax.swing.GroupLayout(pnlResult4);
-        pnlResult4.setLayout(pnlResult4Layout);
+        javax.swing.GroupLayout pnlResult4Layout = new javax.swing.GroupLayout(pnlVerVector);
+        pnlVerVector.setLayout(pnlResult4Layout);
         pnlResult4Layout.setHorizontalGroup(
             pnlResult4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblResult4, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
@@ -292,9 +294,9 @@ public class Vista extends javax.swing.JFrame {
             .addComponent(lblResult4, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        pnlResult5.setBackground(new java.awt.Color(0, 0, 204));
-        pnlResult5.setForeground(new java.awt.Color(255, 255, 255));
-        pnlResult5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlLimpiar.setBackground(new java.awt.Color(0, 0, 204));
+        pnlLimpiar.setForeground(new java.awt.Color(255, 255, 255));
+        pnlLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lblResult5.setBackground(new java.awt.Color(255, 255, 255));
         lblResult5.setFont(new java.awt.Font("Franklin Gothic Demi", 3, 16)); // NOI18N
@@ -302,8 +304,8 @@ public class Vista extends javax.swing.JFrame {
         lblResult5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblResult5.setText("Limpiar");
 
-        javax.swing.GroupLayout pnlResult5Layout = new javax.swing.GroupLayout(pnlResult5);
-        pnlResult5.setLayout(pnlResult5Layout);
+        javax.swing.GroupLayout pnlResult5Layout = new javax.swing.GroupLayout(pnlLimpiar);
+        pnlLimpiar.setLayout(pnlResult5Layout);
         pnlResult5Layout.setHorizontalGroup(
             pnlResult5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblResult5, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
@@ -375,11 +377,11 @@ public class Vista extends javax.swing.JFrame {
                 .addComponent(pnlResult3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addComponent(pnlResult1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(200, 200, 200)
-                .addComponent(pnlResult4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlVerVector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(190, 190, 190)
-                .addComponent(pnlResult5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -436,9 +438,9 @@ public class Vista extends javax.swing.JFrame {
                     .addComponent(pnlResult3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlResult1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlResult4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlResult5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(pnlColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlVerVector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -460,9 +462,159 @@ public class Vista extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tflCodeActionPerformed
 
+    public ButtonGroup getGrpButtons() {
+        return grpButtons;
+    }
+
+    public JLabel getLblAuthor() {
+        return lblAuthor;
+    }
+
+    public JLabel getLblCode() {
+        return lblCode;
+    }
+
+    public JLabel getLblResult() {
+        return lblResult;
+    }
+
+    public JLabel getLblResult1() {
+        return lblResult1;
+    }
+
+    public JLabel getLblResult2() {
+        return lblResult2;
+    }
+
+    public JLabel getLblResult3() {
+        return lblResult3;
+    }
+
+    public JLabel getLblResult4() {
+        return lblResult4;
+    }
+
+    public JLabel getLblResult5() {
+        return lblResult5;
+    }
+
+    public JLabel getLblSearch() {
+        return lblSearch;
+    }
+
+    public JLabel getLblTittle() {
+        return lblTittle;
+    }
+
+    public JPanel getPnlResult() {
+        return pnlResult;
+    }
+
+    public JPanel getPnlColor() {
+        return pnlColor;
+    }
+
+    public JPanel getPnlResult2() {
+        return pnlResult2;
+    }
+
+    public JPanel getPnlResult3() {
+        return pnlResult3;
+    }
+
+    public JPanel getPnlVerVector() {
+        return pnlVerVector;
+    }
+
+    public JPanel getPnlLimpiar() {
+        return pnlLimpiar;
+    }
+
+    public JPanel getPnlSearch() {
+        return pnlSearch;
+    }
+
+    public JRadioButton getRbtAuthor() {
+        return rbtAuthor;
+    }
+
+    public JRadioButton getRbtCode() {
+        return rbtCode;
+    }
+
+    public JRadioButton getRbtTittle() {
+        return rbtTittle;
+    }
+
+    public JTable getTblBinary() {
+        return tblBinary;
+    }
+
+    public JTable getTblLineal() {
+        return tblLineal;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public JScrollPane getjScrollPane2() {
+        return jScrollPane2;
+    }
+
+    public JTextField getTflAuthor() {
+        return tflAuthor;
+    }
+
+    public JTextField getTflAuthor2() {
+        return tflAuthor2;
+    }
+
+    public JTextField getTflAuthor3() {
+        return tflAuthor3;
+    }
+
+    public JTextField getTflCode() {
+        return tflCode;
+    }
+
+    public JTextField getTflCode2() {
+        return tflCode2;
+    }
+
+    public JTextField getTflCode3() {
+        return tflCode3;
+    }
+
+    public JTextField getTflTittle() {
+        return tflTittle;
+    }
+
+    public JTextField getTflTittle2() {
+        return tflTittle2;
+    }
+
+    public JTextField getTflTittle3() {
+        return tflTittle3;
+    }
+
+    public JLabel getTittle() {
+        return tittle;
+    }
+
     /**
      * @param args the command line arguments
      */
+
+    // Getters
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -483,11 +635,11 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JLabel lblSearch;
     private javax.swing.JLabel lblTittle;
     private javax.swing.JPanel pnlResult;
-    private javax.swing.JPanel pnlResult1;
+    private javax.swing.JPanel pnlColor;
     private javax.swing.JPanel pnlResult2;
     private javax.swing.JPanel pnlResult3;
-    private javax.swing.JPanel pnlResult4;
-    private javax.swing.JPanel pnlResult5;
+    private javax.swing.JPanel pnlVerVector;
+    private javax.swing.JPanel pnlLimpiar;
     private javax.swing.JPanel pnlSearch;
     private javax.swing.JRadioButton rbtAuthor;
     private javax.swing.JRadioButton rbtCode;

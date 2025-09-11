@@ -15,7 +15,6 @@ public class Biblioteca {
         if (posicion >= 0 && posicion < libros.length) {
             libros[posicion] = libro;
             this.posicion++;
-            JOptionPane.showMessageDialog(null, "Libro agregado exitosamente.");
         } else {
             JOptionPane.showMessageDialog(null, "Librería llena o posición inválida.");
         }

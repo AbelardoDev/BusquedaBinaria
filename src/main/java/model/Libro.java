@@ -4,12 +4,12 @@ public class Libro {
     private int codigo;
     private String titulo; 
     private String autor;
-    private int nPaginas;
+    private int fechaPublicacion;
     public Libro(String titulo, String autor, int codigo, int nPaginas) {
         this.titulo = titulo;
         this.autor = autor;
         this.codigo = codigo;
-        this.nPaginas = nPaginas;
+        this.fechaPublicacion = nPaginas;
     }
 
     public int getCodigo() {
@@ -25,7 +25,7 @@ public class Libro {
     }
 
     public int getnPaginas() {
-        return nPaginas;
+        return fechaPublicacion;
     }
 
     public void setCodigo(int codigo) {
@@ -37,7 +37,7 @@ public class Libro {
     }
 
     public void setnPaginas(int nPaginas) {
-        this.nPaginas = nPaginas;
+        this.fechaPublicacion = nPaginas;
     }
 
     public void setAutor(String autor) {

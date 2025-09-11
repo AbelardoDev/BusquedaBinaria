@@ -1,35 +1,50 @@
 package controller;
 
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMTMaterialLighterIJTheme;
 import model.Biblioteca;
 import model.Libro;
 import view.Vista;
+
+import java.awt.*;
 
 public class Controlador {
     int n;
     Biblioteca biblioteca;
     Vista vista;
+    static int colorIndex = 0;
+    Color[] colors = {
+            new Color(0, 0, 255),    // Azul
+            new Color(255, 0, 0),    // Rojo
+            new Color(0, 255, 0),    // Verde
+            new Color(255, 255, 0),  // Amarillo
+            new Color(255, 165, 0),  // Naranja
+            new Color(128, 0, 128),  // Púrpura
+            new Color(0, 255, 255),  // Cian
+            new Color(255, 192, 203),// Rosa
+            new Color(165, 42, 42),  // Marrón
+            new Color(255, 20, 147)  // Rosa fuerte
+    };;
+
     public Controlador() {
         inicializar();
     }
 
-    public void inicializar(){
-        FlatMTMaterialLighterIJTheme.setup();
+    public void inicializar() {
         vista = new Vista();
         vista.setVisible(true);
         crearBiblioteca();
+        eventos();
     }
 
     public void crearBiblioteca(){
         n = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("Ingrese el tamaño del arreglo:"));
         biblioteca = new Biblioteca(n);
-        Libro[] temp = agregarLibros();
+        Libro[] temp = instanciarLibros();
         for (int i = 0; i < n; i++) {
             biblioteca.addLibro(temp[i]);
         }
     }
 
-    public Libro[] agregarLibros(){
+    public Libro[] instanciarLibros(){
         Libro[] libros = new Libro[] {
                 new Libro("El Quijote", "Miguel de Cervantes", 1, 1605),
                 new Libro("Cien Años de Soledad", "Gabriel García Márquez", 2, 1967),
@@ -142,5 +157,167 @@ public class Controlador {
                 new Libro("Turtles All the Way Down", "John Green", 100, 2017)
         };
         return libros;
+    }
+
+    public void limpiar(){
+        vista.getTflAuthor().setText("");
+        vista.getTflAuthor2().setText("");
+        vista.getTflAuthor3().setText("");
+        vista.getTflCode().setText("");
+        vista.getTflCode2().setText("");
+        vista.getTflCode3().setText("");
+        vista.getTflTittle().setText("");
+        vista.getTflTittle2().setText("");
+        vista.getTflTittle3().setText("");
+
+    }
+
+    public void eventos(){
+        eventoBotonLimpiar();
+        eventoBuscar();
+        eventoResultado1();
+        eventoResultado2();
+        eventoResultado3();
+        eventoColor();
+        eventoVerVector();
+    }
+
+    public void setColorToPanel(javax.swing.JPanel panel, boolean color) {
+        if (color)
+            panel.setBackground(new java.awt.Color(0, 0, 0));
+        else
+            panel.setBackground(getColor());
+    }
+
+    public void setColor(){
+        vista.getPnlSearch().setBackground(colors[colorIndex]);
+        vista.getPnlLimpiar().setBackground(colors[colorIndex]);
+        vista.getPnlResult().setBackground(colors[colorIndex]);
+        vista.getPnlResult2().setBackground(colors[colorIndex]);
+        vista.getPnlResult3().setBackground(colors[colorIndex]);
+        vista.getPnlColor().setBackground(colors[colorIndex]);
+        vista.getPnlVerVector().setBackground(colors[colorIndex]);
+        vista.getLblAuthor().setForeground(colors[colorIndex]);
+        vista.getLblCode().setForeground(colors[colorIndex]);
+        vista.getTittle().setForeground(colors[colorIndex]);
+        vista.getLblTittle().setForeground(colors[colorIndex]);
+        vista.getjLabel1().setForeground(colors[colorIndex]);
+        vista.getjLabel2().setForeground(colors[colorIndex]);
+        if(colorIndex == colors.length - 1)
+            colorIndex = 0;
+        else
+            colorIndex++;
+    }
+
+    public Color getColor(){
+        if (colorIndex != 0)
+            return colors[colorIndex-1];
+        else
+            return colors[colorIndex];
+    }
+
+    public void eventoBotonLimpiar(){
+        vista.getPnlLimpiar().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        vista.getPnlLimpiar().addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlLimpiar(), true);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlLimpiar(), false);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                limpiar();
+            }
+        });
+    }
+
+    public void eventoBuscar(){
+        vista.getPnlSearch().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        vista.getPnlSearch().addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlSearch(), true);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlSearch(), false);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                System.out.println("Buscar");
+            }
+        });
+    }
+
+    public void eventoResultado1(){
+        vista.getPnlResult().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        vista.getPnlResult().addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlResult(), true);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlResult(), false);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                System.out.println("Resultado 1");
+            }
+        });
+    }
+
+    public void eventoResultado2(){
+        vista.getPnlResult2().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        vista.getPnlResult2().addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlResult2(), true);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlResult2(), false);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                System.out.println("Resultado 2");
+            }
+        });
+    }
+
+    public void eventoResultado3(){
+        vista.getPnlResult3().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        vista.getPnlResult3().addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlResult3(), true);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlResult3(), false);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                System.out.println("Resultado 3");
+            }
+        });
+    }
+
+    public void eventoColor(){
+        vista.getPnlColor().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        vista.getPnlColor().addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlColor(), true);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlColor(), false);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                setColor();
+            }
+        });
+    }
+
+    public void eventoVerVector(){
+        vista.getPnlVerVector().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        vista.getPnlVerVector().addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlVerVector(), true);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                setColorToPanel(vista.getPnlVerVector(), false);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                System.out.println("Ver vector");
+            }
+        });
     }
 }
