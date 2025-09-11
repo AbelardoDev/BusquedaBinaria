@@ -1,16 +1,27 @@
 package controller;
 
+//Importamos nuestras clases
 import model.Biblioteca;
 import model.Libro;
+import model.Ordenamiento;
+import model.Busqueda;
 import view.Vista;
+import view.VectorCompleto;
 
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
+//Declaramos atributos de nuestra clase Controlador como el tamaño del arreglo, la biblioteca, la vista y el vector completo
+//además de los colores para la interfaz, los índices de color y las iteraciones para las búsquedas
 public class Controlador {
-    int n;
-    Biblioteca biblioteca;
-    Vista vista;
-    static int colorIndex = 0;
+    private int n;
+    private Biblioteca biblioteca;
+    private Vista vista;
+    private VectorCompleto vc;
+    private static int colorIndex;
+    private static int eleccion;
+    static int[] iteracionesSecuencial = {0,0,0};
+    static int[] iteracionesBinaria = {0,0,0};
     Color[] colors = {
             new Color(0, 0, 255),    // Azul
             new Color(255, 0, 0),    // Rojo
@@ -28,13 +39,20 @@ public class Controlador {
         inicializar();
     }
 
+    //Inicializamos la vista, la biblioteca y los eventos
     public void inicializar() {
         vista = new Vista();
         vista.setVisible(true);
+        vc = new VectorCompleto();
+        colorIndex = 0;
+        eleccion = 0;
         crearBiblioteca();
         eventos();
+        setColor();
+        grupoBotones();
     }
 
+    //Creamos la biblioteca y llenamos el arreglo con libros predefinidos
     public void crearBiblioteca(){
         n = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("Ingrese el tamaño del arreglo:"));
         biblioteca = new Biblioteca(n);
@@ -44,6 +62,7 @@ public class Controlador {
         }
     }
 
+    //Declaramos un arreglo de libros con 100 libros predefinidos
     public Libro[] instanciarLibros(){
         Libro[] libros = new Libro[] {
                 new Libro("El Quijote", "Miguel de Cervantes", 1, 1605),
@@ -159,6 +178,7 @@ public class Controlador {
         return libros;
     }
 
+    //Método para limpiar la interfaz gráfica
     public void limpiar(){
         vista.getTflAuthor().setText("");
         vista.getTflAuthor2().setText("");
@@ -169,9 +189,13 @@ public class Controlador {
         vista.getTflTittle().setText("");
         vista.getTflTittle2().setText("");
         vista.getTflTittle3().setText("");
-
+        vista.getjLabel1().setText("Iteraciones Búsqueda Lineal: ");
+        vista.getjLabel2().setText("Iteraciones Búsqueda Binaria: ");
+        limpiarTabla((DefaultTableModel) vista.getTblLineal().getModel());
+        limpiarTabla((DefaultTableModel) vista.getTblBinary().getModel());
     }
 
+    //Llamada a métodos que permiten interactuar con la interfaz gráfica a través de eventos
     public void eventos(){
         eventoBotonLimpiar();
         eventoBuscar();
@@ -182,6 +206,7 @@ public class Controlador {
         eventoVerVector();
     }
 
+    //Método para asignar colores a los paneles cuando el mouse entra o sale de ellos
     public void setColorToPanel(javax.swing.JPanel panel, boolean color) {
         if (color)
             panel.setBackground(new java.awt.Color(0, 0, 0));
@@ -189,6 +214,7 @@ public class Controlador {
             panel.setBackground(getColor());
     }
 
+    //Le asigna el color actual a los paneles y etiquetas de la interfaz gráfica
     public void setColor(){
         vista.getPnlSearch().setBackground(colors[colorIndex]);
         vista.getPnlLimpiar().setBackground(colors[colorIndex]);
@@ -203,12 +229,22 @@ public class Controlador {
         vista.getLblTittle().setForeground(colors[colorIndex]);
         vista.getjLabel1().setForeground(colors[colorIndex]);
         vista.getjLabel2().setForeground(colors[colorIndex]);
+        vista.getTflAuthor().setForeground(colors[colorIndex]);
+        vista.getTflAuthor2().setForeground(colors[colorIndex]);
+        vista.getTflAuthor3().setForeground(colors[colorIndex]);
+        vista.getTflCode().setForeground(colors[colorIndex]);
+        vista.getTflCode2().setForeground(colors[colorIndex]);
+        vista.getTflCode3().setForeground(colors[colorIndex]);
+        vista.getTflTittle().setForeground(colors[colorIndex]);
+        vista.getTflTittle2().setForeground(colors[colorIndex]);
+        vista.getTflTittle3().setForeground(colors[colorIndex]);
         if(colorIndex == colors.length - 1)
             colorIndex = 0;
         else
             colorIndex++;
     }
 
+    //Obtiene el color actual
     public Color getColor(){
         if (colorIndex != 0)
             return colors[colorIndex-1];
@@ -216,6 +252,7 @@ public class Controlador {
             return colors[colorIndex];
     }
 
+    //Botón para limpiar los campos de texto
     public void eventoBotonLimpiar(){
         vista.getPnlLimpiar().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         vista.getPnlLimpiar().addMouseListener(new java.awt.event.MouseAdapter() {
@@ -231,6 +268,7 @@ public class Controlador {
         });
     }
 
+    //Botón para buscar libros según los criterios seleccionados
     public void eventoBuscar(){
         vista.getPnlSearch().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         vista.getPnlSearch().addMouseListener(new java.awt.event.MouseAdapter() {
@@ -241,11 +279,15 @@ public class Controlador {
                 setColorToPanel(vista.getPnlSearch(), false);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                System.out.println("Buscar");
+                eleccion = 0;
+                Busqueda.limpiarArreglos();
+                buscar();
+                setIteraciones(0);
             }
         });
     }
 
+    //Permite ver los resultados del primer campo de texto
     public void eventoResultado1(){
         vista.getPnlResult().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         vista.getPnlResult().addMouseListener(new java.awt.event.MouseAdapter() {
@@ -256,11 +298,15 @@ public class Controlador {
                 setColorToPanel(vista.getPnlResult(), false);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                System.out.println("Resultado 1");
+                eleccion = 0;
+                Busqueda.limpiarArreglos();
+                buscar();
+                setIteraciones(0);
             }
         });
     }
 
+    // Permite ver los resultados del segundo campo de texto
     public void eventoResultado2(){
         vista.getPnlResult2().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         vista.getPnlResult2().addMouseListener(new java.awt.event.MouseAdapter() {
@@ -271,11 +317,15 @@ public class Controlador {
                 setColorToPanel(vista.getPnlResult2(), false);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                System.out.println("Resultado 2");
+                eleccion = 1;
+                Busqueda.limpiarArreglos();
+                buscar();
+                setIteraciones(1);
             }
         });
     }
 
+    // Permite ver los resultados del tercer campo de texto
     public void eventoResultado3(){
         vista.getPnlResult3().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         vista.getPnlResult3().addMouseListener(new java.awt.event.MouseAdapter() {
@@ -286,11 +336,15 @@ public class Controlador {
                 setColorToPanel(vista.getPnlResult3(), false);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                System.out.println("Resultado 3");
+                eleccion = 2;
+                Busqueda.limpiarArreglos();
+                buscar();
+                setIteraciones(2);
             }
         });
     }
 
+    // Permite que el panel de color cambie de color al hacer clic en él
     public void eventoColor(){
         vista.getPnlColor().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         vista.getPnlColor().addMouseListener(new java.awt.event.MouseAdapter() {
@@ -306,6 +360,7 @@ public class Controlador {
         });
     }
 
+    // Botón que permite ver el vector completo de libros en una tabla
     public void eventoVerVector(){
         vista.getPnlVerVector().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         vista.getPnlVerVector().addMouseListener(new java.awt.event.MouseAdapter() {
@@ -316,8 +371,224 @@ public class Controlador {
                 setColorToPanel(vista.getPnlVerVector(), false);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                System.out.println("Ver vector");
+                vc.setVisible(true);
+                mostrarVector(biblioteca.listarLibros(), (DefaultTableModel) vc.getjTable1().getModel());
             }
         });
+    }
+
+    // Llena una tabla con los libros disponibles en la biblioteca
+    public void mostrarVector(Libro[] libros, DefaultTableModel model) {
+        model.setRowCount(0);
+        String[] filas = new String[4];
+        for(Libro libro : libros) {
+            if(libro != null) {
+                filas[0] = String.valueOf(libro.getCodigo());
+                filas[1] = libro.getTitulo();
+                filas[2] = libro.getAutor();
+                filas[3] = String.valueOf(libro.getnPaginas());
+                model.addRow(filas);
+            }
+        }
+    }
+
+    // Gestiona los botones radio para seleccionar el criterio de búsqueda
+    public void grupoBotones(){
+        vista.getGrpButtons().add(vista.getRbtCode());
+        vista.getGrpButtons().add(vista.getRbtTittle());
+        vista.getGrpButtons().add(vista.getRbtAuthor());
+    }
+
+    // Ordena los libros según el criterio seleccionado
+    public void ordenarLibros(){
+        if(vista.getRbtCode().isSelected()){
+            ordenarCode();
+        } else if (vista.getRbtTittle().isSelected()) {
+            ordenarTittle();
+        } else if (vista.getRbtAuthor().isSelected()) {
+            ordenarAuthor();
+        }
+    }
+
+    // Ordena según el codigo
+    public void ordenarCode(){
+        Ordenamiento.quickSortCode(biblioteca.listarLibros(), 0, n - 1);
+    }
+
+    // Ordena según el título
+    public void ordenarTittle(){
+        Ordenamiento.quickSortTittle(biblioteca.listarLibros(), 0, n - 1);
+    }
+
+    // Ordena según el autor
+    public void ordenarAuthor(){
+        Ordenamiento.quickSortAuthor(biblioteca.listarLibros(), 0, n - 1);
+    }
+
+    // Busca linealmente segun el codigo
+    public void buscarCodigoLineal(Libro[] libros){
+        if(!vista.getTflCode().getText().isEmpty() && eleccion == 0){
+            Busqueda.busquedaSecuencialCodigo(libros, Integer.parseInt(vista.getTflCode().getText()) );
+            iteracionesSecuencial[0] = Busqueda.iteracionesSecuencial;
+            Busqueda.iteracionesSecuencial = 0;
+        }
+        if(!vista.getTflCode2().getText().isEmpty() && eleccion == 1){
+            Busqueda.busquedaSecuencialCodigo(libros, Integer.parseInt(vista.getTflCode2().getText()));
+            iteracionesSecuencial[1] = Busqueda.iteracionesSecuencial;
+            Busqueda.iteracionesSecuencial = 0;
+        }
+        if(!vista.getTflCode3().getText().isEmpty() && eleccion == 2){
+            Busqueda.busquedaSecuencialCodigo(libros, Integer.parseInt(vista.getTflCode3().getText()));
+            iteracionesSecuencial[2] = Busqueda.iteracionesSecuencial;
+            Busqueda.iteracionesSecuencial = 0;
+        }
+    }
+
+    // Busca linealmente segun el título
+    public void buscarTituloLineal(Libro[] libros){
+        if(!vista.getTflTittle().getText().isEmpty() && eleccion == 0){
+            Busqueda.busquedaSecuencialTitulo(libros, vista.getTflTittle().getText());
+            iteracionesSecuencial [0] = Busqueda.iteracionesSecuencial;
+            Busqueda.iteracionesSecuencial = 0;
+        }
+        if(!vista.getTflTittle2().getText().isEmpty() && eleccion == 1){
+            Busqueda.busquedaSecuencialTitulo(libros, vista.getTflTittle2().getText());
+            iteracionesSecuencial [1] = Busqueda.iteracionesSecuencial;
+            Busqueda.iteracionesSecuencial = 0;
+        }
+        if(!vista.getTflTittle3().getText().isEmpty() && eleccion == 2){
+            Busqueda.busquedaSecuencialTitulo(libros, vista.getTflTittle3().getText());
+            iteracionesSecuencial [2] = Busqueda.iteracionesSecuencial;
+            Busqueda.iteracionesSecuencial = 0;
+        }
+    }
+
+    // Busca linealmente segun el autor
+    public void buscarAutorLineal(Libro[] libros){
+        if(!vista.getTflAuthor().getText().isEmpty() && eleccion == 0){
+            Busqueda.busquedaSecuencialAutor(libros, vista.getTflAuthor().getText());
+            iteracionesSecuencial [0] = Busqueda.iteracionesSecuencial;
+            Busqueda.iteracionesSecuencial = 0;
+        }
+        if(!vista.getTflAuthor2().getText().isEmpty() && eleccion == 1){
+            Busqueda.busquedaSecuencialAutor(libros, vista.getTflAuthor2().getText());
+            iteracionesSecuencial [1] = Busqueda.iteracionesSecuencial;
+            Busqueda.iteracionesSecuencial = 0;
+        }
+        if(!vista.getTflAuthor3().getText().isEmpty() && eleccion == 2){
+            Busqueda.busquedaSecuencialAutor(libros, vista.getTflAuthor3().getText());
+            iteracionesSecuencial [2] = Busqueda.iteracionesSecuencial;
+            Busqueda.iteracionesSecuencial = 0;
+        }
+    }
+
+    // Busca binariamente segun el codigo
+    public void buscarCodigoBinaria(Libro[] libros){
+        if(!vista.getTflCode().getText().isEmpty() && eleccion == 0){
+            Busqueda.busquedaBinariaCodigo(libros, Integer.parseInt(vista.getTflCode().getText()) );
+            iteracionesBinaria[0] = Busqueda.iteracionesBinaria;
+            Busqueda.iteracionesBinaria = 0;
+        }
+        if(!vista.getTflCode2().getText().isEmpty() && eleccion == 1){
+            Busqueda.busquedaBinariaCodigo(libros, Integer.parseInt(vista.getTflCode2().getText()));
+            iteracionesBinaria[1] = Busqueda.iteracionesBinaria;
+            Busqueda.iteracionesBinaria = 0;
+        }
+        if(!vista.getTflCode3().getText().isEmpty() && eleccion == 2){
+            Busqueda.busquedaBinariaCodigo(libros, Integer.parseInt(vista.getTflCode3().getText()));
+            iteracionesBinaria[2] = Busqueda.iteracionesBinaria;
+            Busqueda.iteracionesBinaria = 0;
+        }
+    }
+
+    // Busca binariamente segun el título
+    public  void buscarTituloBinaria(Libro[] libros){
+        if(!vista.getTflTittle().getText().isEmpty() && eleccion == 0){
+            Busqueda.busquedaBinariaTitulo(libros, vista.getTflTittle().getText());
+            iteracionesBinaria[0] = Busqueda.iteracionesBinaria;
+            Busqueda.iteracionesBinaria = 0;
+        }
+        if(!vista.getTflTittle2().getText().isEmpty() && eleccion == 1){
+            Busqueda.busquedaBinariaTitulo(libros, vista.getTflTittle2().getText());
+            iteracionesBinaria[1] = Busqueda.iteracionesBinaria;
+            Busqueda.iteracionesBinaria = 0;
+        }
+        if(!vista.getTflTittle3().getText().isEmpty() && eleccion == 2){
+            Busqueda.busquedaBinariaTitulo(libros, vista.getTflTittle3().getText());
+            iteracionesBinaria[2] = Busqueda.iteracionesBinaria;
+            Busqueda.iteracionesBinaria = 0;
+        }
+    }
+
+    // Busca binariamente segun el autor
+    public void buscarAutorBinaria(Libro[] libros){
+        if(!vista.getTflAuthor().getText().isEmpty() && eleccion == 0){
+            Busqueda.busquedaBinariaAutor(libros, vista.getTflAuthor().getText());
+            iteracionesBinaria[0] = Busqueda.iteracionesBinaria;
+            Busqueda.iteracionesBinaria = 0;
+        }
+        if(!vista.getTflAuthor2().getText().isEmpty() && eleccion == 1){
+            Busqueda.busquedaBinariaAutor(libros, vista.getTflAuthor2().getText());
+            iteracionesBinaria[1] = Busqueda.iteracionesBinaria;
+            Busqueda.iteracionesBinaria = 0;
+        }
+        if(!vista.getTflAuthor3().getText().isEmpty() && eleccion == 2){
+            Busqueda.busquedaBinariaAutor(libros, vista.getTflAuthor3().getText());
+            iteracionesBinaria[2] = Busqueda.iteracionesBinaria;
+            Busqueda.iteracionesBinaria = 0;
+        }
+    }
+
+    // Método principal que gestiona la búsqueda y ordenamiento según el criterio seleccionado
+    public void buscar(){
+        ordenarLibros();
+        if(vista.getRbtCode().isSelected()){
+            buscarCodigoLineal(biblioteca.listarLibros());
+            buscarCodigoBinaria(biblioteca.listarLibros());
+        } else if (vista.getRbtTittle().isSelected()) {
+            buscarTituloLineal(biblioteca.listarLibros());
+            buscarTituloBinaria(biblioteca.listarLibros());
+        } else if (vista.getRbtAuthor().isSelected()) {
+            buscarAutorLineal(biblioteca.listarLibros());
+            buscarAutorBinaria(biblioteca.listarLibros());
+        }
+    }
+
+    // Actualiza las etiquetas y tablas con las iteraciones y resultados de las búsquedas
+    public void setIteraciones(int i){
+        vista.getjLabel1().setText("Iteraciones Búsqueda Binaria: " + iteracionesBinaria[i]);
+        vista.getjLabel2().setText("Iteraciones Búsqueda Lineal: " + iteracionesSecuencial[i]);
+        tablaSecuencial((DefaultTableModel) vista.getTblBinary().getModel());
+        tablaBinaria((DefaultTableModel) vista.getTblLineal().getModel());
+    }
+
+    // Llena las tablas con los detalles de las búsquedas secuenciales
+    public void tablaSecuencial(DefaultTableModel model){
+        model.setRowCount(0);
+        String[] filas = new String[2];
+        for(int i = 0; i < n; i++) {
+            filas[0] = "" + (i + 1);
+            filas[1] = Busqueda.valor[i];
+            model.addRow(filas);
+        }
+    }
+
+    // Llena las tablas con los detalles de las búsquedas binarias
+    public void tablaBinaria(DefaultTableModel model){
+        model.setRowCount(0);
+        String[] filas = new String[4];
+        int i = 0;
+        while (Busqueda.iteracionBi[i] != 0) {
+            filas[0] = "" + (i + 1);
+            filas[1] = "" + Busqueda.inicioV[i];
+            filas[2] = "" + Busqueda.medioV[i];
+            filas[3] = "" + Busqueda.finV[i];
+            model.addRow(filas);
+            i++;
+        }
+    }
+
+    public void limpiarTabla(DefaultTableModel model){
+        model.setRowCount(0);
     }
 }

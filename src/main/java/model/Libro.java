@@ -2,7 +2,7 @@ package model;
 
 public class Libro {
     private int codigo;
-    private String titulo; 
+    private String titulo;
     private String autor;
     private int fechaPublicacion;
     public Libro(String titulo, String autor, int codigo, int nPaginas) {

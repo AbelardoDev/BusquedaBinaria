@@ -1,22 +1,15 @@
 package model;
 
 public class Ordenamiento {
-    public static Libro[] quickSortCodigo(Libro[] libros) {
-        int n = libros.length;
-        Libro[] temp = libros.clone();
-
-        return temp;
-    }
-    // Método para aplicar QuickSort
+    // Método para aplicar QuickSort por código
     public static void quickSortCode(Libro[] libros, int low, int high) {
-        Libro[] tempLibros = libros.clone();
         if (low < high) {
             // Encuentra el índice de partición
             int pi = partitionCode(libros, low, high);
 
             // Ordena las dos mitades recursivamente
-            quickSortCode(tempLibros, low, pi - 1);
-            quickSortCode(tempLibros, pi + 1, high);
+            quickSortCode(libros, low, pi - 1);
+            quickSortCode(libros, pi + 1, high);
         }
     }
 
@@ -46,17 +39,15 @@ public class Ordenamiento {
     }
 
     // Método para aplicar QuickSort por título
-    public static Libro[] quickSortTittle(Libro[] libros, int low, int high) {
-        Libro[] tempLibros = libros.clone();
+    public static void quickSortTittle(Libro[] libros, int low, int high) {
         if (low < high) {
             // Encuentra el índice de partición
             int pi = partitionTittle(libros, low, high);
 
             // Ordena las dos mitades recursivamente
-            quickSortTittle(tempLibros, low, pi - 1);
-            quickSortTittle(tempLibros, pi + 1, high);
+            quickSortTittle(libros, low, pi - 1);
+            quickSortTittle(libros, pi + 1, high);
         }
-        return tempLibros;
     }
 
     // Método para hacer la partición
@@ -85,17 +76,14 @@ public class Ordenamiento {
     }
 
     // Método para aplicar QuickSort por autor
-    public static Libro[] quickSortAuthor(Libro[] libros, int low, int high) {
-        Libro[] tempLibros = libros.clone();
+    public static void quickSortAuthor(Libro[] libros, int low, int high) {
         if (low < high) {
             // Encuentra el índice de partición
             int pi = partitionAuthor(libros, low, high);
-
             // Ordena las dos mitades recursivamente
-            quickSortAuthor(tempLibros, low, pi - 1);
-            quickSortAuthor(tempLibros, pi + 1, high);
+            quickSortAuthor(libros, low, pi - 1);
+            quickSortAuthor(libros, pi + 1, high);
         }
-        return tempLibros;
     }
 
     // Método para hacer la partición

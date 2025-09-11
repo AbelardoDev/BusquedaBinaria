@@ -1,7 +1,6 @@
 package model;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 
 public class Biblioteca {
     private Libro[] libros;
@@ -11,6 +10,7 @@ public class Biblioteca {
         posicion = 0;
     }
 
+    // Agrega un libro a la biblioteca si hay espacio disponible
     public void addLibro(Libro libro) {
         if (posicion >= 0 && posicion < libros.length) {
             libros[posicion] = libro;
@@ -20,6 +20,7 @@ public class Biblioteca {
         }
     }
 
+    // Retorna el arreglo de libros en la biblioteca
     public Libro[] listarLibros() {
         return libros;
     }
